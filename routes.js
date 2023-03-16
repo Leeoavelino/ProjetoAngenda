@@ -1,28 +1,31 @@
 const express = require('express')
 
-const route = express.Router() //responsavel por tratar todas as rotas
+//responsavel por tratar todas as rotas
+const route = express.Router() 
 
-//importando tudo oq esse arquivo exporta
+//arquivos importados
 const homeController = require('./src/controllers/homeController')
-//importando tudo oq esse arquivo exporta
-const contatosController = require('./src/controllers/contatosController')
-//importando tudo oq esse arquivo exporta
-const testesController = require('./src/controllers/testesController')
+const loginController = require('./src/controllers/loginController')
+const contatoController = require('./src/controllers/contatoController')
 
-//caminho para funçao do homeController -  paginaInicial
-route.get('/',  homeController.paginaInicial)
-route.post('/', homeController.trataPost)
+const {loginRequired} = require('./src/middlewares/middlewares') //importando o middleware que verifica se o usuario esta logado ou nao
 
-//caminho para a funçao que esta dentro de contatosController - contatos
-route.get('/contato', contatosController.contatos)
+//rotas de home
+route.get('/',  homeController.index)
 
-//criei uma rota de testes recebendo dois parametros opcionais
-route.get('/testes?/:id_Usuario?/:id_Senha?', testesController.testes)
+//rotas de login
+route.get('/login/index', loginController.index)  //rota que 'vai no arquivo loginController, na funçao index
+route.post('/login/register', loginController.register) //rota de registro de usuarios
+route.post('/login/login', loginController.login) //rota de login do usuarios
+route.get('/login/logout', loginController.logout) //rota de logout para saida do usuario
 
-
-
-
-
+//rotas de contato
+//colocamos loginRequired no meio da rota para checar antes se o usuario esta logado
+route.get('/contato/index', loginRequired,  contatoController.index)
+route.post('/contato/register', loginRequired,  contatoController.register) //recebe os dados registrados
+route.get('/contato/index/:id', loginRequired,  contatoController.editIndex) //rota para cair no contato apos o criarmos
+route.post('/contato/edit/:id', loginRequired,  contatoController.edit) //rota para a ediçao e iremos para a funçao edit
+route.get('/contato/delete/:id', loginRequired,  contatoController.delete)
 
 
 module.exports = route

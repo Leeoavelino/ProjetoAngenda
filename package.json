@@ -1,5 +1,5 @@
 {
-  "name": "aula140",
+  "name": "projetoagenda",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^4.6.0",
     "core-js": "^3.3.2",
@@ -23,7 +24,8 @@
     "helmet": "^6.0.1",
     "mongoose": "^6.9.1",
     "regenerator-runtime": "^0.13.3",
-    "style-loader": "^1.0.0"
+    "style-loader": "^1.0.0",
+    "validator": "^13.9.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.4",

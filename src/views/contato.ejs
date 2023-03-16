@@ -1,0 +1,59 @@
+<%- include('includes/nav') %>
+<%- include('includes/head') %>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-2"></div>
+
+        <div class="col-8 my-3">
+          <h1 class=" text-center">
+            Contato
+          </h1>
+
+          <p class="text-center lead">
+            Crie ou edite seu contato abaixo
+          </p>
+
+          <%- include('includes/messages') %>  <!--Mensagens de erro ou sucesso-->
+
+          <% if(contato._id) { %> <!--Se o contato existir. iremos exibir o contato para a parte de ediçao -->
+
+            <form action="/contato/edit/<%= contato._id %>" method="post">
+
+          <% } else{ %> <!--Caso contrario iremos para a parte de registro-->
+
+            <form action="/contato/register" method="post">
+
+          <% } %>
+
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <div class="form-group">
+              <label>Nome</label>
+              <input value="<%= contato.nome %>" type="text" class="form-control" name="nome"> <!--contato.nome retorna na aba do input o nome criado pelo usuario. isso ajuda na ediçao-->
+            </div>
+
+            <div class="form-group">
+              <label>Sobrenome</label>
+              <input value="<%= contato.sobrenome %>" type="text" class="form-control" name="sobrenome"><!--contato.sobrenome retorna na aba do input o sobrenome criado pelo usuario. isso ajuda na ediçao-->
+            </div>
+
+            <div class="form-group">
+              <label>E-mail</label>
+              <input value="<%= contato.email %>" type="email" class="form-control" name="email"><!--contato.email retorna na aba do input o email criado pelo usuario. isso ajuda na ediçao-->
+            </div>
+
+            <div class="form-group">
+              <label>Telefone</label>
+              <input value="<%= contato.telefone %>" type="tel" class="form-control" name="telefone"><!--contato.telefone retorna na aba do input o telefone criado pelo usuario. isso ajuda na ediçao-->
+            </div>
+
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </form>
+
+        </div>
+
+        <div class="col-2"></div>
+      </div>
+    </div>
+
+<%- include('includes/footer') %>

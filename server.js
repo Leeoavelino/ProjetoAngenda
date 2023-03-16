@@ -1,45 +1,63 @@
-//modulo = micro Framework ou biblioteca
+//referente as variaveis de ambiente que estao no arquivo .env
+require('dotenv').config()
 
-require('dotenv').config() //referente as variaveis de ambiente que estao no arquivo .env
+ //modulo do express declarado para uso  - NAO PRECISA apontar CAMINHO
+const express = require('express')
 
-const express = require('express') //modulo do express declarado para uso  - NAO PRECISA apontar CMAINHO POIS JA ESTA DENTRO DO NODE
-const app = express() //para carregar o express usando o app como variavel
+//para carregar o express usando o app como variavel
+const app = express() 
 
-const mongoose = require('mongoose') //serve para modelar a nossa base de dados. e fazer com que os dados enviados cheguem ao banco de dados da forma que foram enviados
+//serve para modelar a nossa base de dados e fazer com que os dados enviados cheguem ao banco de dados da forma que foram enviados
+const mongoose = require('mongoose') 
 
-mongoose.set('strictQuery', true); //para corrigir o erro que estava dando. o proprio terminal que passou essa forma de correçao.
+//para corrigir o erro que estava dando. o proprio terminal que passou essa forma de correçao.
+mongoose.set('strictQuery', true); 
 
-mongoose.connect(process.env.CONNECTIONSTRING) //para conctar usando a senha que esta no .env
+//para conctar usando a senha que esta no .env
+mongoose.connect(process.env.CONNECTIONSTRING) 
     .then( () => {
         app.emit('pronto')
     })
     .catch( e => console.log(e))
 
-const session = require('express-session') //serve para identificar o navegador de um cliente para quando ele venha acessar nosso servidor.
+//serve para identificar o navegador de um cliente para quando ele venha acessar nosso servidor.
+const session = require('express-session') 
 
-const MongoStore = require('connect-mongo') //é pra falar que as sessoes seram salvas na base de dados
+//é pra falar que as sessoes seram salvas na base de dados
+const MongoStore = require('connect-mongo') 
 
-const flash = require('connect-flash') //mensagens que assim que ler elas vao sumir da base de dados.
+//mensagens de avisos que assim que sao lidas sao apagadas.
+const flash = require('connect-flash') 
 
-const routes = require('./routes') //rotas da nossa aplicaçao
+//cria rotas para as aplicaçoes. estamos declarando a funçao na variavel routes
+const routes = require('./routes') 
 
-const path = require('path') //trabalhar com caminhos
+//trabalhar com caminhos
+const path = require('path') 
 
-const helmet = require('helmet') //segurança
+//segurança
+const helmet = require('helmet') 
 
-const csrf = require('csurf') //isso faz com que nenhum site externo consiga postar coisas pra dentro da nossa aplicaçao
+//isso faz com que nenhum site externo consiga postar coisas pra dentro da nossa aplicaçao
+const csrf = require('csurf') 
 
-const {middlewareGlobal, checkCsrfError, csrfMiddleware} = require('./src/middlewares/middlewares') //importando o middleware - sao funçoes executadas em rotas. uma apos outra.
+//importando os middlewares- sao funçoes executadas em rotas. uma apos outra. uma funçao so é executada se a outra for antes.
+const {middlewareGlobal, checkCsrfError, csrfMiddleware} = require('./src/middlewares/middlewares') 
 
-app.use(helmet()) //chama o helmet 
+//chama o helmet 
+app.use(helmet()) 
 
-app.use(express.urlencoded({ //para postarmos formularios para dentro da nossa aplicaçao
+//para postarmos formularios para dentro da nossa aplicaçao
+app.use(express.urlencoded({ 
     extended: true
 }))
 
-app.use(express.json()) //para usar o json dentro da nossa aplicaçao
+//para usar o json dentro da nossa aplicaçao
+app.use(express.json()) 
 
-app.use(express.static(path.resolve(__dirname, 'public'))) //todos os arquivos estaticos que podem ser acessados diretamente. ex css, js, img
+//todos os arquivos estaticos que podem ser acessados diretamente. ex: css, js, img
+app.use(express.static(path.resolve(__dirname, 'public'))) 
+
 
 const sessionOptions = session({
     secret: 'Qualquer coisa',
@@ -56,20 +74,24 @@ app.use(sessionOptions)
 app.use(flash())
 
 
+//caminho absoluto - arquivos que renderizamos na tela
+app.set('views', path.resolve(__dirname, 'src', 'views')) 
 
-app.set('views', path.resolve(__dirname, 'src', 'views')) //caminho absoluto - arquivos que renderizamos na tela
-app.set('view engine', 'ejs') //a engine que iremos usar é o ejs q é um html "turbinado"
+//a engineer que iremos usar é o ejs q é como se fosse um html turbinado
+app.set('view engine', 'ejs') 
 
 app.use(csrf())
 
-//nossos proprios middlewares
+//chamando nossos middlewares criados
 app.use(middlewareGlobal)  
 app.use(checkCsrfError)
 app.use(csrfMiddleware)
 
-app.use(routes) //faz o express usar as rotas
+//faz o express usar as rotas
+app.use(routes) 
 
-app.on('pronto', () =>{ //a conexão so vai ocorrer quando capturarmos o sinal de pronto emitido pelo app.emit
+//a conexão so vai ocorrer quando capturarmos o sinal de pronto emitido pelo app.emit
+app.on('pronto', () =>{ 
     app.listen(3000, () => { //criando a porta para acessar 
         console.log('Acessar: http://localhost:3000') //colocando o caminho do site na porta 3000
         console.log('servidor executando na porta 3000')

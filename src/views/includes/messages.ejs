@@ -1,0 +1,22 @@
+<% if (errors.length > 0) { %>  <!-- Se tiver erros -->
+    <div class="row">
+        <div class="col my-3">
+        <div class="alert alert-danger"> <!-- Caixinha de alert vermelha -->
+            <% errors.forEach(erro => { %>
+                <%= erro %> <br> <!-- retorna o erro que aconteceu -->
+            <% }) %>
+        </div>
+    </div>
+<% } %>
+
+<% if (success.length > 0) { %> <!--Se tiver mensagens de sucesso -->
+    <div class="row">
+        <div class="col my-3">
+        <div class="alert alert-success"> <!-- Caixinha de alert verde -->
+            <% success.forEach(success => { %>
+                <%= success %> <br> <!-- retorna a frase de sucesso -->
+            <% }) %>
+        </div>
+    </div>
+<% } %>
+

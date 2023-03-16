@@ -1,22 +1,53 @@
-<%- include('includes/head') %>
+<%- include('includes/nav') %> <!--importando do arquivo nav.ejs -->
+<%- include('includes/head') %> <!-- importando do arquivo head.ejs -->
 
-  <section class="container">
+    <div class="container">
+      <div class="row">
+        <div class="col-2"></div>
 
-    <h1>
+        <div class="col-8 my-3">
+          <h1 class=" text-center">
+            Agenda
+          </h1>
 
-      <%- 
-        titulo
-      %>
+          <p class="text-center lead">
+            Seus contatos estão aqui
+          </p>
 
-    </h1>
+          <%- include('includes/messages') %>  <!-- importando do arquivo messages.ejs que retornanm as mensagens de erro ou de sucesso na pagina -->
 
-    <form action="/" method="post">
-      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <label>Cliente</label>
-      <input type="text" name="cliente">
-      <button>Enviar</button>
-    </form>
-   
-  </section>
+          <% if(contatos.length > 0){ %>
 
-  <%- include('includes/footer') %>
+          <div class="responsive-table">  <!-- Tabela para listar os contatos que iremos colocar no crud-->
+            <table class="table my-3">
+              <% contatos.forEach(contato => { %>
+                <tr>
+                  <td><%= contato.nome %></td>
+                  <td><%= contato.sobrenome %></td>
+                  <td><%= contato.telefone %></td>
+                  <td><%= contato.email %></td>
+                  <td><a href="/contato/index/<%= contato._id %>">Editar</a></td>
+                  <td><a class="text-danger" href="/contato/delete/<%= contato._id %>">Excluir</a></td>
+                </tr>
+              <% }) %>
+              
+
+            </table>
+          </div>
+
+            
+          <% }else{ %>
+            <p class="text-center lead">
+              Não existem contatos na sua agenda
+            </p>
+
+          <% } %>
+
+
+        </div>
+
+        <div class="col-2"></div>
+      </div>
+    </div>
+
+<%- include('includes/footer') %> <!-- importando do arquivo footer.ejs -->

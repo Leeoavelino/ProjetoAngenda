@@ -1,0 +1,77 @@
+<!--importando do arquivo nav.ejs -->
+<%- include('includes/nav') %>
+
+<!-- importando do arquivo head.ejs -->
+<%- include('includes/head') %> 
+
+    <div class="container">
+      <div class="row">
+        <div class="col-2"></div>
+
+        <div class="col-8 my-3">
+          <h1 class=" text-center">
+            Criar conta ou Entrar
+          </h1>
+
+          <p class="text-center lead">
+           Faça login ou crie sua conta abaixo
+          </p>
+
+          <!-- importando do arquivo messages.ejs - para mostrar as caixinhas de msg de erros ou sucesso -->
+          <%- include('includes/messages') %>
+
+          <div class="row">
+
+            <div class="col-lg">
+              <h4>Faça seu cadastro</h4>
+              <p>
+                Se você ainda nao tem conta, preencha o formulario abaixo.
+              </p>
+              <!--Todo formulario por padrao é method get-->
+              <form action="/login/register" method="post">  <!--action é a rota que usamos para receber os dados. ficaria (localhost:3000/login/register) -->
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="form-group">
+                  <label>Seu E-mail</label>
+                  <input type="email" class="form-control" name="email"> 
+                </div>
+                <div class="form-group">
+                  <label>Sua senha</label>
+                  <input type="password" class="form-control" name="password">
+                </div>
+                <button type="submit" class="btn btn-primary">Criar Conta</button>
+              </form>
+
+            </div>
+
+            <div class="col-lg">
+              <h4>Faça seu login</h4>
+
+              <p>
+                Se você já tem uma conta, faça login abaixo
+              </p>
+
+              <form action="/login/login" method="post"> <!--action é a rota para receber os dados. (login) -->
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
+                <div class="form-group">
+                  <label>E-mail</label>
+                  <input type="email" class="form-control" name="email">
+                </div>
+                <div class="form-group">
+                  <label>Senha</label>
+                  <input type="password" class="form-control" name="password">
+                </div>
+                <button type="submit" class="btn btn-primary">Entrar</button>
+              </form>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-2"></div>
+      </div>
+    </div>
+
+<!-- importando do arquivo footer.ejs -->
+<%- include('includes/footer') %>

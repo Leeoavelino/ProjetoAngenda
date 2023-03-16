@@ -1,16 +1,25 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ERRO 404</title>
-</head>
-<body>
+<!-- Esse arquivo é o que vai ser mostrado quando ocorrer algum erro no sistema ou de execução do usuario -->
 
-    <h1>
-        ERRO 404
-    </h1>
-    
-</body>
-</html>
+<%- include('includes/nav') %> <!--importando do arquivo nav.ejs -->
+<%- include('includes/head') %> <!-- importando do arquivo head.ejs -->
+
+    <div class="container">
+      <div class="row">
+        <div class="col-2"></div>
+
+        <div class="col-8 my-5">
+          <h1 class="display-1 text-center">
+            Erro 404!
+          </h1>
+
+          <p class="text-center lead">
+            A pagina que você procura nao existe
+          </p>
+        </div>
+
+        <div class="col-2"></div>
+      </div>
+    </div>
+
+<%- include('includes/footer') %> <!-- importando do arquivo footer.ejs -->
+
